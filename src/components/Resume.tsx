@@ -1,4 +1,4 @@
-
+import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import AnimatedSection from "./AnimatedSection";
@@ -155,7 +155,7 @@ export function Resume() {
                       <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
                         <CardContent className="p-4 flex items-start">
                           <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors">
-                            {React.cloneElement(cert.icon as React.ReactElement, { className: "h-6 w-6 text-primary" })}
+                            {React.cloneElement(cert.icon, { className: "h-6 w-6 text-primary" })}
                           </div>
                           <div>
                             <h4 className="font-medium">{cert.title}</h4>
