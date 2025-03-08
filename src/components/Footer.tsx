@@ -1,9 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowUpIcon } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [isVisible, setIsVisible] = useState(false);
   
   const scrollToTop = () => {
     window.scrollTo({
@@ -11,6 +13,20 @@ export function Footer() {
       behavior: "smooth",
     });
   };
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
 
   return (
     <footer className="bg-secondary/50 py-8">
@@ -35,6 +51,19 @@ export function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Floating scroll to top button */}
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={scrollToTop}
+        className={`h-10 w-10 rounded-full fixed bottom-8 right-8 z-50 shadow-lg bg-background/80 backdrop-blur-sm border border-primary/20 hover:bg-primary/10 transition-all duration-300 ${
+          isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
+        }`}
+        aria-label="Scroll to top"
+      >
+        <ArrowUpIcon className="h-5 w-5" />
+      </Button>
     </footer>
   );
 }

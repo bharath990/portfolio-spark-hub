@@ -1,27 +1,21 @@
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { SunIcon, MoonIcon, MenuIcon, XIcon } from "lucide-react";
 
-const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Resume", href: "#resume" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
-];
+interface HeaderProps {
+  onThemeToggle: () => void;
+  currentTheme: "light" | "dark";
+}
 
-export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export function Header({ onThemeToggle, currentTheme }: HeaderProps) {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -30,80 +24,120 @@ export function Header() {
     };
   }, []);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4",
-        isScrolled
-          ? "bg-white/80 backdrop-blur-md shadow-sm"
-          : "bg-transparent"
+        "fixed top-0 w-full z-50 transition-all duration-300",
+        scrolled
+          ? "bg-background/80 backdrop-blur-md shadow-sm py-2"
+          : "bg-transparent py-4"
       )}
     >
-      <div className="container px-4 mx-auto flex items-center justify-between">
-        <a href="#" className="text-xl font-display font-bold text-foreground">
-          Manikanta Reddy
-        </a>
+      <div className="container px-4 mx-auto">
+        <div className="flex items-center justify-between">
+          <a href="#" className="text-xl font-display font-bold">
+            Manikanta<span className="text-primary">.dev</span>
+          </a>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
+          <nav className="hidden md:flex items-center space-x-1">
+            <NavLink href="#" title="Home" />
+            <NavLink href="#about" title="About" />
+            <NavLink href="#resume" title="Resume" />
+            <NavLink href="#projects" title="Projects" />
+            <NavLink href="#contact" title="Contact" />
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onThemeToggle}
+              className="ml-2 rounded-full hover:bg-primary/10"
+              aria-label="Toggle theme"
             >
-              {item.name}
-            </a>
-          ))}
-          <Button asChild>
-            <a href="#contact">
-              Get in Touch
-            </a>
-          </Button>
-        </nav>
+              {currentTheme === "dark" ? (
+                <SunIcon className="h-5 w-5" />
+              ) : (
+                <MoonIcon className="h-5 w-5" />
+              )}
+            </Button>
+          </nav>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden focus:outline-none"
-          onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? (
-            <X className="h-6 w-6 text-foreground" />
-          ) : (
-            <Menu className="h-6 w-6 text-foreground" />
-          )}
-        </button>
+          <div className="flex items-center md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onThemeToggle}
+              className="mr-2 rounded-full hover:bg-primary/10"
+              aria-label="Toggle theme"
+            >
+              {currentTheme === "dark" ? (
+                <SunIcon className="h-5 w-5" />
+              ) : (
+                <MoonIcon className="h-5 w-5" />
+              )}
+            </Button>
+            
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+              className="hover:bg-primary/10 rounded-full"
+            >
+              {menuOpen ? (
+                <XIcon className="h-5 w-5" />
+              ) : (
+                <MenuIcon className="h-5 w-5" />
+              )}
+            </Button>
+          </div>
+        </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile menu */}
       <div
         className={cn(
-          "fixed inset-0 bg-background z-40 flex flex-col justify-center items-center space-y-8 transition-all duration-300 md:hidden",
-          mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          "fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center transition-all duration-300 md:hidden",
+          menuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         )}
       >
-        {navItems.map((item) => (
-          <a
-            key={item.name}
-            href={item.href}
-            className="text-xl font-medium text-foreground hover:text-primary transition-colors"
-            onClick={toggleMobileMenu}
-          >
-            {item.name}
-          </a>
-        ))}
-        <Button asChild onClick={toggleMobileMenu}>
-          <a href="#contact">
-            Get in Touch
-          </a>
-        </Button>
+        <nav className="flex flex-col items-center space-y-6">
+          <MobileNavLink href="#" title="Home" onClick={() => setMenuOpen(false)} />
+          <MobileNavLink href="#about" title="About" onClick={() => setMenuOpen(false)} />
+          <MobileNavLink href="#resume" title="Resume" onClick={() => setMenuOpen(false)} />
+          <MobileNavLink href="#projects" title="Projects" onClick={() => setMenuOpen(false)} />
+          <MobileNavLink href="#contact" title="Contact" onClick={() => setMenuOpen(false)} />
+        </nav>
       </div>
     </header>
+  );
+}
+
+function NavLink({ href, title }: { href: string; title: string }) {
+  return (
+    <a
+      href={href}
+      className="relative px-3 py-2 text-sm font-medium hover:text-primary transition-colors after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100"
+    >
+      {title}
+    </a>
+  );
+}
+
+function MobileNavLink({ href, title, onClick }: { href: string; title: string; onClick: () => void }) {
+  return (
+    <a
+      href={href}
+      className="text-2xl font-medium hover:text-primary transition-colors"
+      onClick={onClick}
+    >
+      {title}
+    </a>
   );
 }
 

@@ -1,9 +1,8 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import AnimatedSection from "./AnimatedSection";
-import { GraduationCapIcon, BriefcaseIcon, CodeIcon, HeartIcon } from "lucide-react";
+import { GraduationCapIcon, BriefcaseIcon, CodeIcon, HeartIcon, AwardIcon, TerminalIcon, DatabaseIcon, BrainIcon, SpeakerIcon, FileSpreadsheetIcon, TrophyIcon, BookmarkIcon, LightbulbIcon, BadgeCheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Resume() {
@@ -23,19 +22,19 @@ export function Resume() {
         <Tabs defaultValue="education" className="w-full">
           <AnimatedSection>
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 md:grid-cols-4 mb-12">
-              <TabsTrigger value="education">
+              <TabsTrigger value="education" className="transition-all duration-200 hover:bg-primary/10">
                 <GraduationCapIcon className="h-4 w-4 mr-2" />
                 <span className="hidden md:inline">Education</span>
               </TabsTrigger>
-              <TabsTrigger value="skills">
+              <TabsTrigger value="skills" className="transition-all duration-200 hover:bg-primary/10">
                 <CodeIcon className="h-4 w-4 mr-2" />
                 <span className="hidden md:inline">Skills</span>
               </TabsTrigger>
-              <TabsTrigger value="experience">
+              <TabsTrigger value="experience" className="transition-all duration-200 hover:bg-primary/10">
                 <BriefcaseIcon className="h-4 w-4 mr-2" />
                 <span className="hidden md:inline">Experience</span>
               </TabsTrigger>
-              <TabsTrigger value="interests">
+              <TabsTrigger value="interests" className="transition-all duration-200 hover:bg-primary/10">
                 <HeartIcon className="h-4 w-4 mr-2" />
                 <span className="hidden md:inline">Interests</span>
               </TabsTrigger>
@@ -44,7 +43,7 @@ export function Resume() {
           
           <TabsContent value="education" className="space-y-8">
             <AnimatedSection animation="fadeIn" delay={200}>
-              <Card>
+              <Card className="card-hover">
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row md:items-start justify-between mb-4">
                     <div>
@@ -59,7 +58,7 @@ export function Resume() {
             </AnimatedSection>
 
             <AnimatedSection animation="fadeIn" delay={300}>
-              <Card>
+              <Card className="card-hover">
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row md:items-start justify-between mb-4">
                     <div>
@@ -74,7 +73,7 @@ export function Resume() {
             </AnimatedSection>
 
             <AnimatedSection animation="fadeIn" delay={400}>
-              <Card>
+              <Card className="card-hover">
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row md:items-start justify-between mb-4">
                     <div>
@@ -94,21 +93,22 @@ export function Resume() {
               <AnimatedSection animation="fadeInLeft" delay={200}>
                 <Card>
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-4">Technical Skills</h3>
-                    <div className="space-y-6">
+                    <h3 className="text-xl font-bold mb-6">Technical Skills</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       {[
-                        { name: "Core Java", value: 85 },
-                        { name: "Python Basics", value: 70 },
-                        { name: "SQL", value: 75 },
-                        { name: "Problem Solving", value: 80 },
-                      ].map((skill) => (
-                        <div key={skill.name} className="space-y-2">
-                          <div className="flex justify-between">
-                            <span className="text-sm font-medium">{skill.name}</span>
-                            <span className="text-sm text-muted-foreground">{skill.value}%</span>
-                          </div>
-                          <Progress value={skill.value} className="h-2" />
-                        </div>
+                        { name: "Core Java", icon: <CodeIcon className="h-8 w-8 text-[#f89820]" /> },
+                        { name: "Python Basics", icon: <TerminalIcon className="h-8 w-8 text-[#4B8BBE]" /> },
+                        { name: "SQL", icon: <DatabaseIcon className="h-8 w-8 text-[#00758F]" /> },
+                        { name: "Problem Solving", icon: <BrainIcon className="h-8 w-8 text-primary" /> },
+                      ].map((skill, index) => (
+                        <Card key={index} className="overflow-hidden group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary">
+                          <CardContent className="p-4 flex flex-col items-center">
+                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                              {skill.icon}
+                            </div>
+                            <span className="font-medium text-center">{skill.name}</span>
+                          </CardContent>
+                        </Card>
                       ))}
                     </div>
                   </CardContent>
@@ -118,21 +118,22 @@ export function Resume() {
               <AnimatedSection animation="fadeInRight" delay={300}>
                 <Card>
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-4">Soft Skills</h3>
-                    <div className="space-y-6">
+                    <h3 className="text-xl font-bold mb-6">Soft Skills</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       {[
-                        { name: "Communication", value: 90 },
-                        { name: "Teamwork", value: 85 },
-                        { name: "Microsoft Excel", value: 75 },
-                        { name: "Leadership", value: 80 },
-                      ].map((skill) => (
-                        <div key={skill.name} className="space-y-2">
-                          <div className="flex justify-between">
-                            <span className="text-sm font-medium">{skill.name}</span>
-                            <span className="text-sm text-muted-foreground">{skill.value}%</span>
-                          </div>
-                          <Progress value={skill.value} className="h-2" />
-                        </div>
+                        { name: "Communication", icon: <SpeakerIcon className="h-8 w-8 text-primary" /> },
+                        { name: "Teamwork", icon: <BadgeCheckIcon className="h-8 w-8 text-primary" /> },
+                        { name: "Microsoft Excel", icon: <FileSpreadsheetIcon className="h-8 w-8 text-[#217346]" /> },
+                        { name: "Leadership", icon: <LightbulbIcon className="h-8 w-8 text-[#FFD700]" /> },
+                      ].map((skill, index) => (
+                        <Card key={index} className="overflow-hidden group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary">
+                          <CardContent className="p-4 flex flex-col items-center">
+                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                              {skill.icon}
+                            </div>
+                            <span className="font-medium text-center">{skill.name}</span>
+                          </CardContent>
+                        </Card>
                       ))}
                     </div>
                   </CardContent>
@@ -143,22 +144,27 @@ export function Resume() {
             <AnimatedSection animation="fadeIn" delay={400}>
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-4">Certifications</h3>
-                  <ul className="space-y-4">
+                  <h3 className="text-xl font-bold mb-6">Certifications</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[
-                      "Career Edge Young Professional by TCS ION",
-                      "Basics of Python by GUVI",
-                      "Developer Job Simulation by Accenture",
-                      "Foundations of Machine Learning by IIIT-Hyderabad",
+                      { title: "Career Edge Young Professional", issuer: "TCS ION", icon: <AwardIcon /> },
+                      { title: "Basics of Python", issuer: "GUVI", icon: <BookmarkIcon /> },
+                      { title: "Developer Job Simulation", issuer: "Accenture", icon: <TrophyIcon /> },
+                      { title: "Foundations of Machine Learning", issuer: "IIIT-Hyderabad", icon: <BadgeCheckIcon /> },
                     ].map((cert, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center mr-3 mt-0.5">
-                          <span className="text-primary text-sm font-bold">{index + 1}</span>
-                        </div>
-                        <span>{cert}</span>
-                      </li>
+                      <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                        <CardContent className="p-4 flex items-start">
+                          <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors">
+                            {React.cloneElement(cert.icon as React.ReactElement, { className: "h-6 w-6 text-primary" })}
+                          </div>
+                          <div>
+                            <h4 className="font-medium">{cert.title}</h4>
+                            <p className="text-sm text-muted-foreground">{cert.issuer}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
                     ))}
-                  </ul>
+                  </div>
                 </CardContent>
               </Card>
             </AnimatedSection>
@@ -166,7 +172,7 @@ export function Resume() {
           
           <TabsContent value="experience" className="space-y-8">
             <AnimatedSection animation="fadeIn" delay={200}>
-              <Card>
+              <Card className="card-hover">
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row gap-4 justify-between mb-4">
                     <div>
@@ -183,7 +189,7 @@ export function Resume() {
             </AnimatedSection>
 
             <AnimatedSection animation="fadeIn" delay={300}>
-              <Card>
+              <Card className="card-hover">
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row gap-4 justify-between mb-4">
                     <div>
@@ -200,23 +206,27 @@ export function Resume() {
             </AnimatedSection>
 
             <AnimatedSection animation="fadeIn" delay={400}>
-              <Card>
+              <Card className="card-hover">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-4">Hackathons & Workshops</h3>
-                  <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center mr-3 mt-0.5">
-                        <span className="text-primary text-sm font-bold">1</span>
-                      </div>
-                      <span>Overnight Hackathon Conducted by College</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center mr-3 mt-0.5">
-                        <span className="text-primary text-sm font-bold">2</span>
-                      </div>
-                      <span>Mobile Application Development Workshop</span>
-                    </li>
-                  </ul>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                      <CardContent className="p-4 flex items-start">
+                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-3 mt-0.5">
+                          <CodeIcon className="h-5 w-5 text-primary" />
+                        </div>
+                        <span>Overnight Hackathon Conducted by College</span>
+                      </CardContent>
+                    </Card>
+                    <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                      <CardContent className="p-4 flex items-start">
+                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-3 mt-0.5">
+                          <CodeIcon className="h-5 w-5 text-primary" />
+                        </div>
+                        <span>Mobile Application Development Workshop</span>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </CardContent>
               </Card>
             </AnimatedSection>
@@ -245,9 +255,9 @@ export function Resume() {
                 },
               ].map((interest, index) => (
                 <AnimatedSection key={index} animation="fadeIn" delay={interest.delay}>
-                  <Card className="card-hover h-full">
+                  <Card className="card-hover h-full group">
                     <CardContent className="p-6 flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 text-3xl">
+                      <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 text-3xl group-hover:bg-primary/20 transition-colors">
                         {interest.icon}
                       </div>
                       <h3 className="text-xl font-bold mb-2">{interest.title}</h3>
@@ -259,7 +269,7 @@ export function Resume() {
             </div>
             
             <AnimatedSection animation="fadeIn" delay={500}>
-              <Card>
+              <Card className="card-hover">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-4">Co-Curricular Activities</h3>
                   <div className="flex items-start">
